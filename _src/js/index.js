@@ -23,9 +23,9 @@ const callback = (x, y) => {
 const springyBox = new Springify(
   {
     propName: 'x',
-    stiffness: 100,
-    damping: 100,
-    mass: 100,
+    stiffness: 5,
+    damping: 20,
+    mass: 10,
   },
   {
     propName: 'y',
@@ -33,16 +33,7 @@ const springyBox = new Springify(
   callback,
 );
 
-// document.addEventListener("mousemove", e => {
-//   springyBox.x.input = e.clientX;
-//   springyBox.y.input = e.clientY;
-
-//   if (!springyBox.animating) {
-//     requestAnimationFrame(springyBox.animate);
-//   }
-// });
-
-document.addEventListener("click", e => {
+document.addEventListener("mousemove", e => {
   springyBox.x.input = e.clientX;
   springyBox.y.input = e.clientY;
 
@@ -50,3 +41,12 @@ document.addEventListener("click", e => {
     requestAnimationFrame(springyBox.animate);
   }
 });
+
+// document.addEventListener("click", e => {
+//   springyBox.x.input = e.clientX;
+//   springyBox.y.input = e.clientY;
+
+//   if (!springyBox.animating) {
+//     requestAnimationFrame(springyBox.animate);
+//   }
+// });

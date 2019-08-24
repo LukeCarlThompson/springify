@@ -56,7 +56,7 @@ function Springify(...args) {
   const interpolate = (inputObj) => {
     const stiffness = percentToValueBetweenRange(inputObj.stiffness, -1, -300);
     const damping = percentToValueBetweenRange(inputObj.damping, -0.4, -20);
-    const mass = percentToValueBetweenRange(inputObj.mass, 0.1, 1);
+    const mass = percentToValueBetweenRange(inputObj.mass, 0.1, 10);
     const springX = stiffness * (inputObj.output - inputObj.input);
     const damperX = damping * inputObj.velocity;
     inputObj.amplitude = (springX + damperX) / mass;
