@@ -91,7 +91,6 @@ function Springify(...args) {
       animationFrame = requestAnimationFrame(this.animate);
     } else {
       this.animating = false;
-      // TODO:  Set all output values to their exact input and run callback one more time.
       console.log("finished spring animation");
     }
   };
