@@ -8,7 +8,6 @@ const helicopterDemo = document.querySelector(".section--example-helicopter");
 
 const helicopterCallback = (x, y) => {
   // The callback function uses requestAnimationFrame inside Springify.
-
   helicopter.style.transform = `translate(${x.output}px, ${y.output}px) rotate(${x.velocity * 0.05}deg)`;
 };
 
@@ -43,6 +42,38 @@ helicopterDemo.addEventListener("mousemove", e => {
 });
 
 // End helicopter demo
+
+
+// Example from --> to
+const sailboat = document.querySelector(".sailboat");
+const sailAway = document.querySelector(".sailboat--away");
+const sailBack = document.querySelector(".sailboat--back");
+
+const sailboatCallback = (x) => {
+  sailboat.style.left = `${x.output}%`;
+  sailboat.style.transform = `rotate(${x.velocity * -0.2}deg)`;
+};
+
+const springySailboat = new Springify(
+  {
+    propName: "x",
+    input: 10,
+    stiffness: 10,
+    damping: 80,
+    mass: 50,
+  },
+  sailboatCallback
+);
+
+sailAway.addEventListener('click', () => {
+  springySailboat.x.input = 90;
+  springySailboat.animate();
+});
+
+sailBack.addEventListener('click', () => {
+  springySailboat.x.input = 10;
+  springySailboat.animate();
+});
 
 
 

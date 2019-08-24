@@ -5,6 +5,8 @@ damping: effective range from 0 - 100;
 mass: effective range from 0 - 100;
 */
 
+// TODO: clamp the output values to two decimal places
+
 function Springify(...args) {
 
   this.animating = false;
@@ -47,6 +49,11 @@ function Springify(...args) {
       this[arg.propName].stiffness = arg.stiffness || defaults.stiffness;
       this[arg.propName].damping = arg.damping || defaults.damping;
       this[arg.propName].mass = arg.mass || defaults.mass;
+      this[arg.propName].input = arg.input || defaults.input;
+
+      // Set the output to start from the input value in case it's not zero
+      this[arg.propName].output = this[arg.propName].input;
+
       // Push the propObject to our propObjects reference array
       propObjects.push(this[arg.propName]);
     } else {
