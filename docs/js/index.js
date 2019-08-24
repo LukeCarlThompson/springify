@@ -23,6 +23,9 @@ const callback = (x, y) => {
 const springyBox = new Springify(
   {
     propName: 'x',
+    stiffness: 100,
+    damping: 100,
+    mass: 100,
   },
   {
     propName: 'y',
