@@ -1,14 +1,16 @@
 
-// TODO: Interpolate the stiffness and damping to make sane ranges. maybe 0 - 1 for each;
-
+/* 
+stiffness: effective range from 0 - 100;
+damping: effective range from 0 - 100;
+*/
 
 function Springify(...args) {
 
   this.animating = false;
 
   const defaults = {
-    stiffness: -5,
-    damping: 0.97,
+    stiffness: 5,
+    damping: 10,
   };
 
   const template = {
@@ -27,6 +29,12 @@ function Springify(...args) {
   // Create an array to hold a reference to all our prop objects
   const propObjects = [];
 
+  // Takes a percent value and returns the number within min/max range.
+  // Used to convert the stiffness and damping to easy inputs
+  const percentToValueBetweenRange = (percent, min, max) => {
+    return (percent * (max - min) / 100) + min;
+  };
+
   args.map(arg => {
     // if arg has a propName property then add it to propName array, add the defaults to it and attach it to our springify instance.
     if(typeof arg.propName != 'undefined') {
@@ -44,8 +52,10 @@ function Springify(...args) {
 
   // Takes in arg object and sets interpolated values on that object based on some spring physics equations
   const interpolate = (inputObj) => {
-    const springX = inputObj.stiffness * (inputObj.output - inputObj.input);
-    const damperX = inputObj.damping * inputObj.velocity;
+    const stiffness = percentToValueBetweenRange(inputObj.stiffness, -1, -300);
+    const damping = percentToValueBetweenRange(inputObj.damping, -0.4, -10);
+    const springX = stiffness * (inputObj.output - inputObj.input);
+    const damperX = damping * inputObj.velocity;
     inputObj.amplitude = (springX + damperX) / inputObj.mass;
     inputObj.velocity += inputObj.amplitude * (timeSinceLastFrame / 1000);
     inputObj.output += inputObj.velocity * (timeSinceLastFrame / 1000);
