@@ -1,5 +1,7 @@
-# js-library-template
-### A template built for creating javascript libraries and general tinkering.
+# Springify.js 🌿
+### A tiny lil' (>1kb) utility function for creating dynamic spring animations.
+
+Currently a work in progress. More details coming soon.
 
 It uses gulp, scss, browserSync, Rollup and buble.
 

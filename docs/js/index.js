@@ -1,79 +1,12 @@
-import Springify from "../../dist/libtemplate.esm.js";
+import Springify from "../../dist/springify.esm.js";
 
-console.log("Index.js file 😎");
+import sailboatDemo from "./sailboatDemo.js";
+import heliDemo from "./heliDemo.js";
 
-// Example helicopter
-const helicopter = document.querySelector(".helicopter");
-const helicopterDemo = document.querySelector(".section--example-helicopter");
-
-const helicopterCallback = (x, y) => {
-  // The callback function uses requestAnimationFrame inside Springify.
-  helicopter.style.transform = `translate(${x.output}px, ${y.output}px) rotate(${x.velocity * 0.05}deg)`;
-};
-
-const springyHelicopter = new Springify(
-  {
-    propName: "x",
-  },
-  {
-    propName: "y",
-  },
-  helicopterCallback
-);
+heliDemo();
+sailboatDemo();
 
 
-helicopterDemo.addEventListener("mousemove", e => {
-    // normalize the coordinates to the helicopter demo area
-    const helicopterDemoRect = helicopterDemo.getBoundingClientRect();
-    const relativeX =
-    e.clientX - (helicopterDemoRect.left + helicopterDemoRect.width * 0.5);
-  
-    const relativeY =
-    e.clientY - (helicopterDemoRect.top + helicopterDemoRect.height * 0.5);
-
-  // Send our updated values as the inputs to the spring
-  springyHelicopter.x.input = relativeX;
-  springyHelicopter.y.input = relativeY;
-
-  // If the Springify instance is not already animating then start animating again
-  if (!springyHelicopter.animating) {
-    springyHelicopter.animate();
-  }
-});
-
-// End helicopter demo
-
-
-// Example from --> to
-const sailboat = document.querySelector(".sailboat");
-const sailAway = document.querySelector(".sailboat--away");
-const sailBack = document.querySelector(".sailboat--back");
-
-const sailboatCallback = (x) => {
-  sailboat.style.left = `${x.output}%`;
-  sailboat.style.transform = `rotate(${x.velocity * -0.2}deg)`;
-};
-
-const springySailboat = new Springify(
-  {
-    propName: "x",
-    input: 10,
-    stiffness: 10,
-    damping: 80,
-    mass: 50,
-  },
-  sailboatCallback
-);
-
-sailAway.addEventListener('click', () => {
-  springySailboat.x.input = 90;
-  springySailboat.animate();
-});
-
-sailBack.addEventListener('click', () => {
-  springySailboat.x.input = 10;
-  springySailboat.animate();
-});
 
 
 

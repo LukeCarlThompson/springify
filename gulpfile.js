@@ -57,7 +57,7 @@ function style() {
 // JS processing
 function copyScripts() {
   return gulp
-    .src(config.src.folder + "js/index.js", { allowEmpty: true } )
+    .src(config.src.folder + "js/*.js", { allowEmpty: true } )
     .pipe(gulp.dest(config.dev + "js/"));
 };
 

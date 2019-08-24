@@ -6,6 +6,7 @@ mass: effective range from 0 - 100;
 */
 
 // TODO: clamp the output values to two decimal places
+// TODO: Fire an event when the animation finishes
 
 function Springify(...args) {
 
