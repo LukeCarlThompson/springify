@@ -10,13 +10,13 @@ function Springify(...args) {
   this.animating = false;
 
   const defaults = {
+    input: 0,
     stiffness: 10,
     damping: 30,
     mass: 20,
   };
 
   const template = {
-    input: 0,
     output: 0,
     velocity: 0,
     amplitude: 0,
@@ -43,6 +43,7 @@ function Springify(...args) {
     // if arg has a propName property then add it to propName array, add the defaults to it and attach it to our springify instance.
     if(typeof arg.propName != 'undefined') {
       this[arg.propName] = Object.assign({}, template);
+      this[arg.propName].stiffness = arg.input || defaults.input;
       this[arg.propName].stiffness = arg.stiffness || defaults.stiffness;
       this[arg.propName].damping = arg.damping || defaults.damping;
       this[arg.propName].mass = arg.mass || defaults.mass;

@@ -7,19 +7,9 @@ const helicopter = document.querySelector(".helicopter");
 const helicopterDemo = document.querySelector(".section--example-helicopter");
 
 const helicopterCallback = (x, y) => {
-  // Do any calculations and and adjustments in the callback function because this uses requestAnimationFrame inside Springify.
+  // The callback function uses requestAnimationFrame inside Springify.
 
-  // normalize the coordinates to the helicopter demo area
-  const helicopterDemoRect = helicopterDemo.getBoundingClientRect();
-  const relativeX =
-    x.output - (helicopterDemoRect.left + helicopterDemoRect.width * 0.5);
-
-  const relativeY =
-    y.output - (helicopterDemoRect.top + helicopterDemoRect.height * 0.5);
-
-  // Apply these to our helicopter
-  helicopter.style.transform = `translate(${relativeX}px, ${relativeY}px) rotate(${x.velocity *
-    0.05}deg)`;
+  helicopter.style.transform = `translate(${x.output}px, ${y.output}px) rotate(${x.velocity * 0.05}deg)`;
 };
 
 const springyHelicopter = new Springify(
@@ -32,10 +22,19 @@ const springyHelicopter = new Springify(
   helicopterCallback
 );
 
+
 helicopterDemo.addEventListener("mousemove", e => {
-  // Just input the raw data here, no extra calculations for maximum efficiency.
-  springyHelicopter.x.input = e.clientX;
-  springyHelicopter.y.input = e.clientY;
+    // normalize the coordinates to the helicopter demo area
+    const helicopterDemoRect = helicopterDemo.getBoundingClientRect();
+    const relativeX =
+    e.clientX - (helicopterDemoRect.left + helicopterDemoRect.width * 0.5);
+  
+    const relativeY =
+    e.clientY - (helicopterDemoRect.top + helicopterDemoRect.height * 0.5);
+
+  // Send our updated values as the inputs to the spring
+  springyHelicopter.x.input = relativeX;
+  springyHelicopter.y.input = relativeY;
 
   // If the Springify instance is not already animating then start animating again
   if (!springyHelicopter.animating) {

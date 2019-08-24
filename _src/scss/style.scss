@@ -26,6 +26,11 @@ $color--text: rgb(40, 40, 40);
   }
 }
 
+pre {
+  white-space: pre-wrap;
+  word-break: keep-all
+}
+
 
 .h1 {
   font-size: 3rem;
@@ -47,14 +52,18 @@ p {
 // Example helicopter
 .section--example-helicopter {
   position: relative;
-  border: 1px solid red;
-  height: 800px;
+  background: linear-gradient(to top, #c0efff, #5ca2ff);
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  height: 600px;
   display: flex;
+  overflow: hidden;
 }
 .helicopter {
   font-size: 5rem;
   transform-origin: top center;
   margin: auto;
+  pointer-events: none;
   will-change: transform;
 }
 

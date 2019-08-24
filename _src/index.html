@@ -11,7 +11,9 @@
     <div class="container">
       <div class="section section--title">
         <h1 class="h1">Springify.js 🌿</h1>
-        <h2 class="subtitle">Spingify is a small (0.6kb) function that takes an array of inputs, runs them through a spring physics function and sends the results to a callback function.</h2>
+        <h2 class="subtitle">Spingify is a small (0.8kb) utility function for creating dynamic springs based on user input.</h2>
+        <p>Input values can be static, like this.</p>
+        <p>Or inputs can be updated dynamically during the animation and the spring</p>
         <p>It's a pretty simple utility that can be used to create a range of useful and fun interactions.</p>
       </div>
 
@@ -22,23 +24,45 @@
 const spring = new Springify(
   {
     propName: "x",
+    input: 0,
     stiffness: 10,
     damping: 30,
     mass: 20,
   },
   {
     propName: "y",
+    input: 0,
     stiffness: 10,
     damping: 30,
     mass: 20,
   },
   function animationCallback(x, y) {
     // Do stuff with the x and y values in here.
+    console.log(x.output);
+    console.log(y.output);
   }
 );
+
+// We need to change the input value so it will spring from the original one to the new one. These input values can be updated at any interval, no need to throttle them for performance.
+spring.x.input = 500;
+spring.y.input = 250;
+
+// Call the animate method
+spring.animate();
+
+// While the animation is running
+spring.animating === true;
+
+// When the animation has finished
+spring.animating === false;
+
           </code>
         </pre>
       </div>
+      <p>Pass one or many objects into Springify. Each object passed in must have a 'propName' property that is a unique string. The callback function will receive an object containing spingified values for each object passed in.</p>
+      <p>Each object passed into Springify will create a property in the instance with the propName string as it's name. This is where the input to be springified is set.</p>
+      <p>We don't just use a simple 'from' and 'to' prop because we want to create a dynamic spring that can respond to user input part way through an animation.</p>
+      <p>While it can be used as a 'from --> to' animation function it also allows for more dynamic interaction.</p>
       <div class="section section--example-helicopter">
         <div class="helicopter">🚁</div>
       </div>
