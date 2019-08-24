@@ -1,9 +1,9 @@
 {
-  "name": "libtemplate",
+  "name": "springify",
   "version": "0.0.1",
-  "main": "dist/libtemplate.umd.js",
-  "module": "dist/libtemplate.esm.js",
-  "description": "A template for js libraries",
+  "main": "dist/springify.umd.js",
+  "module": "dist/springify.esm.js",
+  "description": "A tiny lil function for animating dynamic springs",
   "author": "Luke Carl Thompson <hello@lukethompson.com.au> (https://lukethompson.com.au)",
   "license": "MIT",
   "repository": "https://github.com/LukeCarlThompson/js-library-template.git",
