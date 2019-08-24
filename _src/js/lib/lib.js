@@ -10,8 +10,8 @@ function Springify(...args) {
   this.animating = false;
 
   const defaults = {
-    stiffness: 5,
-    damping: 10,
+    stiffness: 10,
+    damping: 30,
     mass: 20,
   };
 
@@ -26,6 +26,9 @@ function Springify(...args) {
   let lastTime;
   let currentTime;
   let timeSinceLastFrame;
+
+  // var to hold a reference to the animation frame so we can cancel it if need be.
+  let animationFrame;
 
   // Create an array to hold a reference to all our prop objects
   const propObjects = [];
@@ -83,7 +86,8 @@ function Springify(...args) {
 
     // If not finished then animate another frame
     if (!isFinished) {
-      requestAnimationFrame(this.animate);
+      cancelAnimationFrame(animationFrame);
+      animationFrame = requestAnimationFrame(this.animate);
     } else {
       this.animating = false;
       // TODO:  Set all output values to their exact input and run callback one more time.

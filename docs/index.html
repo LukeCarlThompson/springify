@@ -9,7 +9,39 @@
   </head>
   <body>
     <div class="container">
-      <h1>Index.html 🤓</h1>
+      <div class="section section--title">
+        <h1 class="h1">Springify.js 🌿</h1>
+        <h2 class="subtitle">Spingify is a small (0.6kb) function that takes an array of inputs, runs them through a spring physics function and sends the results to a callback function.</h2>
+        <p>It's a pretty simple utility that can be used to create a range of useful and fun interactions.</p>
+      </div>
+
+      <div class="section--code">
+        <h2>Basic setup</h2>
+        <pre>
+          <code>
+const spring = new Springify(
+  {
+    propName: "x",
+    stiffness: 10,
+    damping: 30,
+    mass: 20,
+  },
+  {
+    propName: "y",
+    stiffness: 10,
+    damping: 30,
+    mass: 20,
+  },
+  function animationCallback(x, y) {
+    // Do stuff with the x and y values in here.
+  }
+);
+          </code>
+        </pre>
+      </div>
+      <div class="section section--example-helicopter">
+        <div class="helicopter">🚁</div>
+      </div>
     </div>
 
     <div class="box-parent">
