@@ -1,90 +1,82 @@
 
 // TODO: Interpolate the stiffness and damping to make sane ranges. maybe 0 - 1 for each;
 
-// TODO: Make the function take an array of targets and create seperate props for each one. Run the animate function over each value and then pass all values into the callback function. So it can be used for any number of inputs and outputs.
 
-// TODO: How to set up default parameters object properly.
-
-
-function springify({
-  x = {
-    stiffness: -5,
-    damping: -0.97,
-  },
-  y = {
-    stiffness: -5,
-    damping: -0.97,
-  },
-  callback = () => {},
-} = {}) {
-
-  this.x = {
-    stiffness: x.stiffness,
-    damping: x.damping,
-    input: 0,
-    output: 0,
-    velocity: 0,
-    amplitude: 0,
-    mass: 0.2,
-  };
-
-  this.y = {
-    stiffness: y.stiffness,
-    damping: y.damping,
-    input: 0,
-    output: 0,
-    velocity: 0,
-    amplitude: 0,
-    mass: 0.2,
-  };
+function Springify(...args) {
 
   this.animating = false;
 
+  const defaults = {
+    stiffness: -5,
+    damping: 0.97,
+  };
+
+  const template = {
+    input: 0,
+    output: 0,
+    velocity: 0,
+    amplitude: 0,
+    mass: 0.2,
+  };
+
+  // some vars to hold reference to time each frame was rendered
   let lastTime;
+  let currentTime;
+  let timeSinceLastFrame;
+
+  // Create an array to hold a reference to all our prop objects
+  const propObjects = [];
+
+  args.map(arg => {
+    // if arg has a propName property then add it to propName array, add the defaults to it and attach it to our springify instance.
+    if(typeof arg.propName != 'undefined') {
+      this[arg.propName] = Object.assign({}, template);
+      this[arg.propName].stiffness = arg.stiffness || defaults.stiffness;
+      this[arg.propName].damping = arg.damping || defaults.damping;
+      // Push the propObject to our propObjects reference array
+      propObjects.push(this[arg.propName]);
+    } else {
+      // Else it must be our callback, so assign that to the this.callback prop.
+      this.callback = arg;
+    }
+  });
+
+
+  // Takes in arg object and sets interpolated values on that object based on some spring physics equations
+  const interpolate = (inputObj) => {
+    const springX = inputObj.stiffness * (inputObj.output - inputObj.input);
+    const damperX = inputObj.damping * inputObj.velocity;
+    inputObj.amplitude = (springX + damperX) / inputObj.mass;
+    inputObj.velocity += inputObj.amplitude * (timeSinceLastFrame / 1000);
+    inputObj.output += inputObj.velocity * (timeSinceLastFrame / 1000);
+  };
 
   this.animate = () => {
-    const currentTime = Date.now();
+    currentTime = Date.now();
     if (!this.animating) lastTime = currentTime - 1;
-    const timeSinceLastFrame = currentTime - lastTime;
+    timeSinceLastFrame = currentTime - lastTime;
     lastTime = currentTime;
-
+    
     this.animating = true;
 
-    // Do the maths for X value
-    const springX = this.x.stiffness * (this.x.output - this.x.input);
-    const damperX = this.x.damping * this.x.velocity;
-    this.x.amplitude = (springX + damperX) / this.x.mass;
-    this.x.velocity += this.x.amplitude * (timeSinceLastFrame / 1000);
-    this.x.output += this.x.velocity * (timeSinceLastFrame / 1000);
+    propObjects.forEach(propObject => {
+      interpolate(propObject);
+    });
 
-    // Do the maths for Y value
-    const springY = this.y.stiffness * (this.y.output - this.y.input);
-    const damperY = this.y.damping * this.y.velocity;
-    this.y.amplitude = (springY + damperY) / this.y.mass;
-    this.y.velocity += this.y.amplitude * (timeSinceLastFrame / 1000);
-    this.y.output += this.y.velocity * (timeSinceLastFrame / 1000);
+    // execute the callback function and pass in our prop objects array containing the springified values
+    this.callback(...propObjects);
 
-    // execute the callback function and pass in our springified values
-    callback(this.x, this.y);
-
-    // returns true if velocity is less than 0.5 and output is less than 0.5 from input
-    const finished =
-      Math.abs(this.x.velocity) < 0.5 &&
-      Math.abs(this.x.output - this.x.input) < 0.5 &&
-      Math.abs(this.y.velocity) < 0.5 &&
-      Math.abs(this.y.output - this.y.input) < 0.5;
+    const isFinished = propObjects.every( propObject => Math.abs(propObject.velocity) < 0.5 && Math.abs(propObject.output - propObject.input) < 0.5);
 
     // If not finished then animate another frame
-    if (!finished) {
+    if (!isFinished) {
       requestAnimationFrame(this.animate);
     } else {
       this.animating = false;
-      // Set to the exact input because we might have stopped one frame away
-      this.x.output = this.x.input;
-      this.y.output = this.y.input;
+      // TODO:  Set all output values to their exact input and run callback one more time.
       console.log("finished spring animation");
     }
   };
 }
 
-export default springify;
+export default Springify;
