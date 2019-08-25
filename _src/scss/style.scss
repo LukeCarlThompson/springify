@@ -132,36 +132,3 @@ p {
     background: linear-gradient(191deg, rgba(205,205,205,1) 44%, rgba(238,238,238,1) 64%, rgba(144,144,144,1) 79%, rgba(232,232,232,1) 92%, rgba(124,124,124,1) 100%);
   }
 }
-
-
-
-
-
-
-.box-parent {
-  display: inline-block;
-  padding: 100px;
-  background-color: red;
-  // top: 200px;
-  // left: 200px;
-  // position: fixed;
-}
-
-.box {
-  position: relative;
-  height: 100px;
-  width: 100px;
-  background: teal;
-  border-radius: 6px;
-  position: relative;
-  .box-child {
-    position: absolute;
-    top: 0;
-    left: calc(100% - 10px);
-    height: 20px;
-    width: 300px;
-    border-radius: 10px;
-    background-color: blue;
-    transform-origin: left;
-  }
-}
