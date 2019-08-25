@@ -18,7 +18,7 @@ export default function() {
   const helicopter = document.querySelector(".helicopter");
   const helicopterDemo = document.querySelector(".section--example-helicopter");
 
-  helicopterDemo.addEventListener("mousemove", e => {
+  const helicopterMove = (e) => {
     // normalize the mouse coordinates to the helicopter demo area
     const helicopterDemoRect = helicopterDemo.getBoundingClientRect();
     const relativeX =
@@ -33,5 +33,8 @@ export default function() {
 
     // Start the animation
     springyHelicopter.animate();
-  });
+  };
+
+  helicopterDemo.addEventListener("mousemove", e => helicopterMove(e));
+  helicopterDemo.addEventListener("touchmove", e => helicopterMove(e));
 }
