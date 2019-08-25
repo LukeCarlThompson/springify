@@ -11,14 +11,19 @@
     <div class="container">
       <div class="section section--title">
         <h1 class="h1">Springify.js 🌿</h1>
-        <h2 class="subtitle">Spingify is a tiny lil' (> 1kb) utility function for creating dynamic spring animations.</h2>
-        <p>It's a bare bones but flexible utility that can be used to create a range of useful and fun interactions.</p>
+        <h2 class="subtitle">
+          Spingify is a tiny lil' (> 1kb) utility function for creating dynamic
+          spring animations.
+        </h2>
+        <p>
+          It's a bare bones but flexible utility that can be used to create a
+          range of useful and fun interactions.
+        </p>
       </div>
 
-      
-            <div class="section--code">
-              <h2>Basic setup</h2>
-              <pre>
+      <div class="section--code">
+        <h2>Basic setup</h2>
+        <pre>
                 <code class="language-javascript">
 const spring = new Springify(
   {
@@ -40,28 +45,43 @@ spring.animate();
       
                 </code>
               </pre>
-            </div>
-            <p>Pass one or many objects into Springify. Each object passed in must have a 'propName' property that is a unique string. The callback function will receive an object containing spingified values for each object passed in.</p>
-            <p>Each object passed into Springify will create a property in the instance with the propName string as it's name. This is where the input to be springified is set.</p>
-            <p>We don't just use a simple 'from' and 'to' prop because we want to create a dynamic spring that can respond to user input part way through an animation.</p>
-            <p>While it can be used as a 'from --> to' animation function it also allows for more dynamic interaction.</p>
-          </div>
+      </div>
+      <p>
+        Pass one or many objects into Springify. Each object passed in must have
+        a 'propName' property that is a unique string. The callback function
+        will receive an object containing spingified values for each object
+        passed in.
+      </p>
+      <p>
+        Each object passed into Springify will create a property in the instance
+        with the propName string as it's name. This is where the input to be
+        springified is set.
+      </p>
+      <p>
+        We don't just use a simple 'from' and 'to' prop because we want to
+        create a dynamic spring that can respond to user input part way through
+        an animation.
+      </p>
+      <p>
+        While it can be used as a 'from --> to' animation function it also
+        allows for more dynamic interaction.
+      </p>
+    </div>
 
-
-      <div class="container">
-        <h2>Spring from --> to</h2>
-        <h4>Using static values</h4>
-        <p>Try interrupting the animation mid way through.</p>
-        <div class="section section--example-from-to">
-          <div class="sailboat">
-            <span class="sailboat--inner">⛵</span>
-          </div>
+    <div class="container">
+      <h2>Spring from --> to</h2>
+      <h4>Using static values</h4>
+      <p>Try interrupting the animation mid way through.</p>
+      <div class="section section--example-from-to">
+        <div class="sailboat">
+          <span class="sailboat--inner">⛵</span>
         </div>
-        <button class="btn sailboat--away">Sail away</button>
-        <button class="btn sailboat--back">Come back</button>
+      </div>
+      <button class="btn sailboat--away">Sail away</button>
+      <button class="btn sailboat--back">Come back</button>
 
-        <div class="section--code">
-          <pre>
+      <div class="section--code">
+        <pre>
             <code class="language-javascript">
 const sailboat = document.querySelector(".sailboat");
 const sailAway = document.querySelector(".sailboat--away");
@@ -92,21 +112,20 @@ sailBack.addEventListener("click", () => {
 });
             </code>
           </pre>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>Dynamic spring linked to scrolling</h2>
+      <div class="section section--example-spider">
+        <div class="spider">
+          <div class="spider__inner">🕷</div>
+          <div class="spider__thread"></div>
         </div>
       </div>
-  
-      <div class="container">
-        <h2>Dynamic spring linked to scrolling</h2>
-        <div class="section section--example-spider">
-            <div class="spider">
-              <div class="spider__inner">🕷</div>
-              <div class="spider__thread"></div>
-            </div>
-          </div>
 
-          <div class="section--code">
-              <h2>Spider</h2>
-            <pre>
+      <div class="section--code">
+        <pre>
               <code class="language-javascript">
 const spider = document.querySelector(".spider");
 const spiderArea = document.querySelector(".section--example-spider");
@@ -130,25 +149,58 @@ window.addEventListener("scroll", () => {
 });
               </code>
             </pre>
-          </div>
-
-
       </div>
+    </div>
 
-      <div class="container">
-        <h2>Dynamic spring linked to mouse dragging</h2>
-      </div>
-
-
-
+    <div class="container">
+      <h2>Dynamic spring linked to mouse dragging</h2>
+    </div>
 
     <div class="container">
       <h2>Dynamic spring linked to mouse movements</h2>
-        <div class="section section--example-helicopter">
-          <div class="helicopter">🚁</div>
-        </div>
+      <div class="section section--example-helicopter">
+        <div class="helicopter">🚁</div>
+      </div>
+      <div class="section--code">
+        <pre>
+          <code class="language-javascript">
+  const springyHelicopter = new Springify(
+    {
+      propName: "x",
+    },
+    {
+      propName: "y",
+    },
+    function(x, y) {
+      helicopter.style.transform = `translate(${x.output}px, ${
+        y.output
+      }px) rotate(${x.velocity * 0.05}deg)`;
+    }
+  );
+  
+  const helicopter = document.querySelector(".helicopter");
+  const helicopterDemo = document.querySelector(".section--example-helicopter");
+  
+  helicopterDemo.addEventListener("mousemove", e => {
+    // normalize the mouse coordinates to the helicopter demo area
+    const helicopterDemoRect = helicopterDemo.getBoundingClientRect();
+    const relativeX =
+      e.clientX - (helicopterDemoRect.left + helicopterDemoRect.width * 0.5);
+  
+    const relativeY =
+      e.clientY - (helicopterDemoRect.top + helicopterDemoRect.height * 0.5);
+  
+    // Send our updated values as the inputs to the spring
+    springyHelicopter.x.input = relativeX;
+    springyHelicopter.y.input = relativeY;
+  
+    // Start the animation
+    springyHelicopter.animate();
+  });
+          </code>
+        </pre>
+      </div>
     </div>
-
 
     <script type="text/javascript" src="./js/scripts.js"></script>
   </body>

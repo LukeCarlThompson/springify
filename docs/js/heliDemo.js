@@ -1,17 +1,6 @@
 import Springify from "../../dist/springify.esm.js";
 
 export default function() {
-  // Helicopter demo code
-  const helicopter = document.querySelector(".helicopter");
-  const helicopterDemo = document.querySelector(".section--example-helicopter");
-
-  const helicopterCallback = (x, y) => {
-    // The callback function uses requestAnimationFrame inside Springify.
-    helicopter.style.transform = `translate(${x.output}px, ${
-      y.output
-    }px) rotate(${x.velocity * 0.05}deg)`;
-  };
-
   const springyHelicopter = new Springify(
     {
       propName: "x",
@@ -19,11 +8,18 @@ export default function() {
     {
       propName: "y",
     },
-    helicopterCallback
+    function(x, y) {
+      helicopter.style.transform = `translate(${x.output}px, ${
+        y.output
+      }px) rotate(${x.velocity * 0.05}deg)`;
+    }
   );
 
+  const helicopter = document.querySelector(".helicopter");
+  const helicopterDemo = document.querySelector(".section--example-helicopter");
+
   helicopterDemo.addEventListener("mousemove", e => {
-    // normalize the coordinates to the helicopter demo area
+    // normalize the mouse coordinates to the helicopter demo area
     const helicopterDemoRect = helicopterDemo.getBoundingClientRect();
     const relativeX =
       e.clientX - (helicopterDemoRect.left + helicopterDemoRect.width * 0.5);
@@ -38,4 +34,4 @@ export default function() {
     // Start the animation
     springyHelicopter.animate();
   });
-};
+}

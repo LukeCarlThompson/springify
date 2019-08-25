@@ -1,9 +1,6 @@
 import Springify from "../../dist/springify.esm.js";
 
 export default function() {
-  const spider = document.querySelector(".spider");
-  const spiderArea = document.querySelector(".section--example-spider");
-
   const springySpider = new Springify(
     {
       propName: "x",
@@ -15,6 +12,9 @@ export default function() {
       spider.style.transform = `translateY(${x.output}px)`;
     }
   );
+
+  const spider = document.querySelector(".spider");
+  const spiderArea = document.querySelector(".section--example-spider");
 
   window.addEventListener("scroll", () => {
     springySpider.x.input =
