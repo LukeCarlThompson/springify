@@ -1,3 +1,4 @@
+import { lookup } from "dns";
 
 /* 
 stiffness: effective range from 0 - 100;
@@ -9,7 +10,6 @@ mass: effective range from 0 - 100;
 // TODO: Fire an event when the animation finishes
 
 function Springify(...args) {
-
   this.animating = false;
 
   const defaults = {
@@ -39,12 +39,12 @@ function Springify(...args) {
   // Takes a percent value and returns the number within min/max range.
   // Used to convert the stiffness and damping to easy inputs
   const percentToValueBetweenRange = (percent, min, max) => {
-    return (percent * (max - min) / 100) + min;
+    return (percent * (max - min)) / 100 + min;
   };
 
   args.map(arg => {
     // if arg has a propName property then add it to propName array, add the defaults to it and attach it to our springify instance.
-    if(typeof arg.propName != 'undefined') {
+    if (typeof arg.propName != "undefined") {
       this[arg.propName] = Object.assign({}, template);
       this[arg.propName].stiffness = arg.input || defaults.input;
       this[arg.propName].stiffness = arg.stiffness || defaults.stiffness;
@@ -63,9 +63,8 @@ function Springify(...args) {
     }
   });
 
-
   // Takes in arg object and sets interpolated values on that object based on some spring physics equations
-  const interpolate = (inputObj) => {
+  const interpolate = inputObj => {
     const stiffness = percentToValueBetweenRange(inputObj.stiffness, -1, -300);
     const damping = percentToValueBetweenRange(inputObj.damping, -0.4, -20);
     const mass = percentToValueBetweenRange(inputObj.mass, 0.1, 10);
@@ -76,12 +75,13 @@ function Springify(...args) {
     inputObj.output += inputObj.velocity * (timeSinceLastFrame / 1000);
   };
 
-  this.animate = () => {
+  // The animation loop
+  const animLoop = () => {
     currentTime = Date.now();
     if (!this.animating) lastTime = currentTime - 1;
     timeSinceLastFrame = currentTime - lastTime;
     lastTime = currentTime;
-    
+
     this.animating = true;
 
     propObjects.forEach(propObject => {
@@ -91,15 +91,26 @@ function Springify(...args) {
     // execute the callback function and pass in our prop objects array containing the springified values
     this.callback(...propObjects);
 
-    const isFinished = propObjects.every( propObject => Math.abs(propObject.velocity) < 0.5 && Math.abs(propObject.output - propObject.input) < 0.5);
+    // returns true if each output value has reached the input
+    const isFinished = propObjects.every(
+      propObject =>
+        Math.abs(propObject.velocity) < 0.5 &&
+        Math.abs(propObject.output - propObject.input) < 0.5
+    );
 
-    // If not finished then animate another frame
+    // If not finished then cancel any queued frame and animate another frame
     if (!isFinished) {
       cancelAnimationFrame(animationFrame);
-      animationFrame = requestAnimationFrame(this.animate);
+      animationFrame = requestAnimationFrame(animLoop);
     } else {
       this.animating = false;
       console.log("finished spring animation");
+    }
+  };
+
+  this.animate = () => {
+    if (!this.animating) {
+      animLoop();
     }
   };
 }
