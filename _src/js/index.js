@@ -1,10 +1,14 @@
+import Prism from 'prismjs';
+
 import Springify from "../../dist/springify.esm.js";
 
 import sailboatDemo from "./sailboatDemo.js";
+import spiderDemo from "./spiderDemo.js";
 import heliDemo from "./heliDemo.js";
 
 heliDemo();
 sailboatDemo();
+spiderDemo();
 
 
 
