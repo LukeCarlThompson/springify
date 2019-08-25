@@ -3,6 +3,8 @@
 
 Currently a work in progress. More details coming soon.
 
+<a href="https://lukecarlthompson.github.io/springify.js/.">Check out the demos and docs</a>.
+
 It uses gulp, scss, browserSync, Rollup and buble.
 
 ### Folder structure

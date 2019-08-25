@@ -21,10 +21,10 @@
         </p>
       </div>
 
+      <h2>Basic setup</h2>
       <div class="section--code">
-        <h2>Basic setup</h2>
         <pre>
-                <code class="language-javascript">
+          <code class="language-javascript">
 const spring = new Springify(
   {
     propName: "x",
@@ -36,36 +36,89 @@ const spring = new Springify(
   }
 );
 
-// This is how we update the input springify will spring to.
-// Notice the property name is the same as our string passed in as propName.
+// Update the value springify will spring to.
 spring.x.input = 500;
 
 // Call the animate method
 spring.animate();
-      
-                </code>
-              </pre>
+          </code>
+        </pre>
+      </div>
+
+      <h2>Default values</h2>
+      <div class="section--code">
+        <pre>
+            <code class="language-javascript">
+const spring = new Springify(
+  {
+    propName: "x"
+    input: 0,
+    stiffness: 0,
+    damping: 30,
+    mass: 20,
+  },
+  function (x) { }
+);
+            </code>
+          </pre>
       </div>
       <p>
         Pass one or many objects into Springify. Each object passed in must have
-        a 'propName' property that is a unique string. The callback function
-        will receive an object containing spingified values for each object
-        passed in.
+        a 'propName' property that is a unique string.
       </p>
       <p>
-        Each object passed into Springify will create a property in the instance
-        with the propName string as it's name. This is where the input to be
-        springified is set.
+        The callback function will receive an object containing spingified
+        output and velocity properties for each object passed in.
       </p>
       <p>
-        We don't just use a simple 'from' and 'to' prop because we want to
-        create a dynamic spring that can respond to user input part way through
-        an animation.
+        The springify instance exposes properties with the propName string that
+        was passed in. These are used for setting and updating the input values.
       </p>
-      <p>
-        While it can be used as a 'from --> to' animation function it also
-        allows for more dynamic interaction.
-      </p>
+      <p>These values are cached internally and only referenced when the next frame is ready to animate. So no need to throttle the frequency of updating these.</p>
+      <h2>Example</h2>
+      <div class="section--code">
+          <pre>
+              <code class="language-javascript">
+const spring = new Springify(
+  {
+    propName: "cat"
+  },
+  {
+    propName: "dog"
+  },
+  {
+    propName: "bird"
+  },
+  function (cat, dog, bird) {
+    // Use thes values to animate with
+    cat.output
+    cat.velocity
+    dog.output
+    dog.velocity
+    bird.output
+    bird.velocity
+  }
+);
+
+// Use these properties as inputs for the value to spring to
+spring.cat.input = 10;
+spring.dog.input = 10;
+spring.bird.input = 10;
+              </code>
+            </pre>
+        </div>
+
+        <h2>Animate Method</h2>
+        <p>The animate method is used to start the spring animation loop. The loop continues to run until the animation has finished. While the animation loop is running the input values can be updated as frequently as you like and springify will respond dynamically.</p>
+        <p>The animate method uses requestAnimationFrame internally and will not start more than one animation loop at a time. So there is no need to debounce or throttle calling this based on user input such as scrolling or mouse movements.</p>
+        <h2>Example</h2>
+        <div class="section--code">
+            <pre>
+                <code class="language-javascript">
+spring.animate();
+                </code>
+              </pre>
+          </div>
     </div>
 
     <div class="container">
