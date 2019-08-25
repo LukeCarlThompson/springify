@@ -35,9 +35,7 @@ export default function() {
     springyHelicopter.x.input = relativeX;
     springyHelicopter.y.input = relativeY;
 
-    // If the Springify instance is not already animating then start animating again
-    if (!springyHelicopter.animating) {
-      springyHelicopter.animate();
-    }
+    // Start the animation
+    springyHelicopter.animate();
   });
 };
