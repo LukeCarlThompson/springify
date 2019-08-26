@@ -18,14 +18,14 @@ export default function() {
   const helicopter = document.querySelector(".helicopter");
   const helicopterDemo = document.querySelector(".section--example-helicopter");
 
-  const helicopterMove = (e) => {
+  const helicopterMove = (clientX, clientY) => {
     // normalize the mouse coordinates to the helicopter demo area
     const helicopterDemoRect = helicopterDemo.getBoundingClientRect();
     const relativeX =
-      e.clientX - (helicopterDemoRect.left + helicopterDemoRect.width * 0.5);
+    clientX - (helicopterDemoRect.left + helicopterDemoRect.width * 0.5);
 
     const relativeY =
-      e.clientY - (helicopterDemoRect.top + helicopterDemoRect.height * 0.5);
+      clientY - (helicopterDemoRect.top + helicopterDemoRect.height * 0.5);
 
     // Send our updated values as the inputs to the spring
     springyHelicopter.x.input = relativeX;
@@ -35,6 +35,8 @@ export default function() {
     springyHelicopter.animate();
   };
 
-  helicopterDemo.addEventListener("mousemove", e => helicopterMove(e));
-  helicopterDemo.addEventListener("touchstart", e => helicopterMove(e));
+  helicopterDemo.addEventListener("mousemove", e => helicopterMove(e.clientX, e.clientY));
+  helicopterDemo.addEventListener("touchmove", e => {
+    helicopterMove(e.touches[0].clientX, e.touches[0].clientY);
+  });
 }
