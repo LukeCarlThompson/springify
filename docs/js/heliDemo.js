@@ -36,5 +36,5 @@ export default function() {
   };
 
   helicopterDemo.addEventListener("mousemove", e => helicopterMove(e));
-  helicopterDemo.addEventListener("touchmove", e => helicopterMove(e));
+  helicopterDemo.addEventListener("touchstart", e => helicopterMove(e));
 }
