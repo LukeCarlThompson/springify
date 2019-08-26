@@ -37,9 +37,7 @@ function Springify(...args) {
 
   // Takes a percent value and returns the number within min/max range.
   // Used to convert the stiffness and damping to easy inputs
-  const percentToValueBetweenRange = (percent, min, max) => {
-    return (percent * (max - min)) / 100 + min;
-  };
+  const percentToValueBetweenRange = (percent, min, max) => (percent * (max - min)) / 100 + min;
 
   args.map(arg => {
     // if arg has a propName property then add it to propName array, add the defaults to it and attach it to our springify instance.
