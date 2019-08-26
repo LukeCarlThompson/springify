@@ -1,4 +1,4 @@
-import Prism from 'prismjs';
+import 'prismjs';
 
 import Springify from "../../dist/springify.esm.js";
 
