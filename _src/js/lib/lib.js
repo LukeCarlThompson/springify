@@ -1,4 +1,3 @@
-import { lookup } from "dns";
 
 /* 
 stiffness: effective range from 0 - 100;
