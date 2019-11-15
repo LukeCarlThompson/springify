@@ -9,7 +9,7 @@ const sourceMaps = require("gulp-sourcemaps");
 
 const sass = require("gulp-sass");
 const autoprefixer = require("gulp-autoprefixer");
-const cssNano = require("gulp-cssNano");
+const cleanCSS = require("gulp-clean-css");
 
 const rollup = require("gulp-better-rollup");
 const resolve = require('rollup-plugin-node-resolve');
@@ -47,7 +47,7 @@ function style() {
     .pipe(sourceMaps.init())
     .pipe(sass().on("error", sass.logError))
     .pipe(autoprefixer())
-    .pipe(cssNano())
+    .pipe(cleanCSS())
     .pipe(sourceMaps.write())
     .pipe(gulp.dest(config.dev + "css/"))
     .pipe(browserSync.stream());
