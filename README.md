@@ -1,9 +1,11 @@
 # Springify.js 🌿
 ### A tiny lil' (>1kb) utility function for creating dynamic spring animations.
 
-Currently a work in progress. More details coming soon.
+Docs and demos here.
+https://lukecarlthompson.github.io/springify.js
 
-It uses gulp, scss, browserSync, Rollup and buble.
+
+## Dev
 
 ### Folder structure
 **_src/** - is where you work  
