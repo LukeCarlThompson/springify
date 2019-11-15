@@ -4,14 +4,12 @@ export default function() {
   const springySailboat = new Springify(
     {
       propName: "x",
-      input: 10,
       stiffness: 10,
       damping: 80,
       mass: 50,
     },
     function(x) {
-      sailboat.style.left = `${x.output}%`;
-      sailboat.style.transform = `rotate(${x.velocity * -0.2}deg)`;
+      sailboat.style.transform = `translateX(${x.output}%) rotate(${x.velocity * -0.3}deg)`;
     }
   );
 
@@ -20,12 +18,12 @@ export default function() {
   const sailBack = document.querySelector(".sailboat--back");
 
   sailAway.addEventListener("click", () => {
-    springySailboat.x.input = 90;
+    springySailboat.x.input = 100;
     springySailboat.animate();
   });
 
   sailBack.addEventListener("click", () => {
-    springySailboat.x.input = 10;
+    springySailboat.x.input = 0;
     springySailboat.animate();
   });
 }
