@@ -30,6 +30,6 @@
   },
   "dependencies": {
     "modern-normalize": "^0.5.0",
-    "prismjs": "^1.17.1"
+    "prismjs": "^1.24.0"
   }
 }
