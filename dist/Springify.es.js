@@ -55,7 +55,6 @@ class Springify {
       } else {
         this.animating = false;
         this.onFinished();
-        console.log("finished spring animation");
       }
     });
     __publicField(this, "animate", () => {
