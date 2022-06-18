@@ -4,14 +4,14 @@ var __publicField = (obj, key, value) => {
   __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
   return value;
 };
-const percentToValueBetweenRange = (percent, min, max) => percent * (max - min) / 100 + min;
 class Springify {
   constructor({
+    input = 0,
     stiffness = 10,
     damping = 30,
     mass = 20,
-    input = 0,
-    onFrame = () => null,
+    onFrame = () => {
+    },
     onFinished = () => {
     }
   }) {
@@ -23,23 +23,39 @@ class Springify {
     __publicField(this, "velocity", 0);
     __publicField(this, "amplitude", 0);
     __publicField(this, "animating");
-    __publicField(this, "callback");
+    __publicField(this, "onFrame");
+    __publicField(this, "onFinished");
     __publicField(this, "lastTime");
     __publicField(this, "currentTime");
     __publicField(this, "delta");
     __publicField(this, "animationFrame");
-    __publicField(this, "onFinished");
-    __publicField(this, "interpolate", () => {
-      const stiffness = percentToValueBetweenRange(this.stiffness, -1, -300);
-      const damping = percentToValueBetweenRange(this.damping, -0.4, -20);
-      const mass = percentToValueBetweenRange(this.mass, 0.1, 10);
-      const springX = stiffness * (this.output - this.input);
-      const damperX = damping * this.velocity;
-      this.amplitude = (springX + damperX) / mass;
+    __publicField(this, "interpolate");
+    __publicField(this, "animate");
+    __publicField(this, "animLoop");
+    this.animating = false;
+    this.onFrame = onFrame;
+    this.onFinished = onFinished;
+    this.lastTime = 0;
+    this.currentTime = 0;
+    this.delta = 0;
+    this.animationFrame = 0;
+    this.stiffness = stiffness;
+    this.damping = damping;
+    this.mass = mass;
+    this._input = input;
+    this.output = this.input;
+    const percentToValueBetweenRange = (percent, min, max) => percent * (max - min) / 100 + min;
+    this.interpolate = () => {
+      const stiffness2 = percentToValueBetweenRange(this.stiffness, -1, -300);
+      const damping2 = percentToValueBetweenRange(this.damping, -0.4, -20);
+      const mass2 = percentToValueBetweenRange(this.mass, 0.1, 10);
+      const springX = stiffness2 * (this.output - this.input);
+      const damperX = damping2 * this.velocity;
+      this.amplitude = (springX + damperX) / mass2;
       this.velocity += this.amplitude * (this.delta / 1e3);
       this.output += this.velocity * (this.delta / 1e3);
-    });
-    __publicField(this, "animLoop", () => {
+    };
+    this.animLoop = () => {
       this.currentTime = Date.now();
       if (!this.animating)
         this.lastTime = this.currentTime - 1;
@@ -47,7 +63,7 @@ class Springify {
       this.lastTime = this.currentTime;
       this.animating = true;
       this.interpolate();
-      this.callback(this.output, this.velocity);
+      this.onFrame(this.output, this.velocity);
       this.animating = !(Math.abs(this.velocity) < 0.2 && Math.abs(this.output - this.input) < 0.2);
       if (this.animating) {
         cancelAnimationFrame(this.animationFrame);
@@ -56,24 +72,12 @@ class Springify {
         this.animating = false;
         this.onFinished();
       }
-    });
-    __publicField(this, "animate", () => {
+    };
+    this.animate = () => {
       if (!this.animating) {
         this.animLoop();
       }
-    });
-    this.animating = false;
-    this.callback = onFrame;
-    this.lastTime = 0;
-    this.currentTime = 0;
-    this.delta = 0;
-    this.animationFrame = 0;
-    this.stiffness = stiffness;
-    this.damping = damping;
-    this.mass = mass;
-    this.onFinished = onFinished;
-    this._input = input;
-    this.output = this.input;
+    };
   }
   set input(value) {
     this._input = value;
