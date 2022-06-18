@@ -12,7 +12,7 @@
     }
   },
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0",
   "scripts": {
     "dev": "vite",
     "prebuild": "tsc && vite build --config vite.dist.config.js",
