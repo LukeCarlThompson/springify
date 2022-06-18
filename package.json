@@ -23,11 +23,10 @@
   "devDependencies": {
     "prettier": "^2.7.0",
     "typescript": "^4.5.4",
-    "vite": "^2.9.9"
-  },
-  "dependencies": {
+    "vite": "^2.9.9",
+    "sass": "^1.52.3",
     "modern-normalize": "^1.1.0",
-    "prismjs": "^1.28.0",
-    "sass": "^1.52.3"
-  }
+    "prismjs": "^1.28.0"
+  },
+  "dependencies": {}
 }
