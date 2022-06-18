@@ -9,6 +9,7 @@ export default defineConfig(({ command, mode }) => {
       lib: {
         entry: path.resolve(__dirname, 'src/scripts/Springify.ts'),
         name: 'Springify',
+        formats: ['es', 'iife', 'umd'],
         fileName: (format) => `Springify.${format}.js`,
       },
     },
