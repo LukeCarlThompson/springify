@@ -1,6 +1,6 @@
 {
   "name": "springify",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A tiny lil' (under 1kb gzip) utility function for creating dynamic spring animations",
   "files": [
     "dist"
