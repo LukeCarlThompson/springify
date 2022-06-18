@@ -1,5 +1,7 @@
 {
   "name": "springify",
+  "version": "1.0.0",
+  "description": "A tiny lil' (under 1kb gzip) utility function for creating dynamic spring animations",
   "files": [
     "dist"
   ],
@@ -12,7 +14,6 @@
     }
   },
   "private": true,
-  "version": "1.0.0",
   "scripts": {
     "dev": "vite",
     "prebuild": "tsc && vite build --config vite.dist.config.js",
