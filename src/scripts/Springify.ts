@@ -4,10 +4,6 @@ damping: effective range from 0 - 100;
 mass: effective range from 0 - 100;
 */
 
-// Takes a percent value and returns the number within min/max range.
-// Used to convert the stiffness and damping to easy inputs
-const percentToValueBetweenRange = (percent: number, min: number, max: number) => (percent * (max - min)) / 100 + min;
-
 interface SpringifyProps {
   input?: number;
   stiffness?: number;
@@ -65,6 +61,11 @@ export class Springify {
 
     // Set the output to start from the input value for the first frame
     this.output = this.input;
+
+    // Takes a percent value and returns the number within min/max range.
+    // Used to convert the stiffness and damping to easy inputs
+    const percentToValueBetweenRange = (percent: number, min: number, max: number) =>
+      (percent * (max - min)) / 100 + min;
 
     // Takes in arg object and sets interpolated values on that object based on some spring physics equations
     this.interpolate = () => {
