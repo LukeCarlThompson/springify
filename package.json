@@ -13,7 +13,7 @@
       "require": "./dist/Springify.umd.js"
     }
   },
-  "private": true,
+  "private": false,
   "scripts": {
     "dev": "vite",
     "prebuild": "tsc && vite build --config vite.dist.config.js",
