@@ -18,7 +18,8 @@
     "dev": "vite",
     "prebuild": "tsc && vite build --config vite.dist.config.js",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "echo \"No test specified\""
   },
   "devDependencies": {
     "prettier": "^2.7.0",
