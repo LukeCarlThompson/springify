@@ -93,7 +93,8 @@ export class Springify {
       this.onFrame(this.output, this.velocity);
 
       // returns true if each output value has reached the input
-      this.animating = !(Math.abs(this.velocity) < 0.2 && Math.abs(this.output - this.input) < 0.2);
+      // TODO: find a way to determine when the animation should end. Perhaps based on percentage values of the input and output so it works the same for large and small values.
+      this.animating = !(Math.abs(this.velocity) < 0.1 && Math.abs(this.output - this.input) < 0.01);
 
       // If not finished then cancel any queued frame and animate another frame
       if (this.animating) {
