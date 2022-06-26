@@ -16,6 +16,15 @@
         <p>It's a bare bones but flexible utility that can be used to create a range of useful and fun interactions.</p>
       </div>
 
+      <h2>Get started</h2>
+      <div class="section--code">
+        <pre>
+          <code class="language-bash">
+npm i springify
+          </code>
+        </pre>
+      </div>
+
       <h2>Basic setup</h2>
       <div class="section--code">
         <pre>
@@ -74,9 +83,7 @@ const spring = new Springify(
       <h4>Using static values</h4>
       <p>Try interrupting the animation mid way through.</p>
       <div class="section section--example-from-to">
-        <div class="sailboat">
-          <span class="sailboat--inner">⛵</span>
-        </div>
+        <div class="sailboat">⛵</div>
       </div>
       <button class="btn sailboat--away">Sail away</button>
       <button class="btn sailboat--back">Come back</button>
@@ -88,22 +95,27 @@ const sailboat = document.querySelector('.sailboat');
 const sailAwayButton = document.querySelector('.sailboat--away');
 const sailBackButton = document.querySelector('.sailboat--back');
 
+let direction = 'right';
+
 const springySailboat = new Springify({
   stiffness: 10,
   damping: 80,
   mass: 50,
   onFrame: (output, velocity) => {
     if (sailboat === null) return;
-    sailboat.style.transform = `translateX(${output}%) rotate(${velocity * -0.3}deg)`;
+    sailboat.style.transform = `rotate(${velocity * -0.3}deg) scaleX(${direction === 'right' ? -1 : 1})`;
+    sailboat.style.left = `${output}%`;
   },
 });
 
-sailAwayButton.addEventListener('click', () => {
+sailAway.addEventListener('click', () => {
   springySailboat.input = 100;
+  direction = 'right';
 });
 
-sailBackButton.addEventListener('click', () => {
+sailBack.addEventListener('click', () => {
   springySailboat.input = 0;
+  direction = 'left';
 });
             </code>
           </pre>
@@ -111,10 +123,53 @@ sailBackButton.addEventListener('click', () => {
     </div>
 
     <div class="container">
+      <h2>Button press</h2>
+      <div class="section section--example-button">
+        <button class="demo-button">Press me</button>
+      </div>
+
+      <div class="section--code">
+        <pre>
+              <code class="language-javascript">
+const button = document.querySelector('.demo-button');
+
+const springyButton = new Springify({
+  stiffness: 20,
+  damping: 30,
+  mass: 10,
+  input: 1,
+  onFrame: (output, velocity) => {
+    button.style.transform = `scaleX(${output + velocity * 0.1}) scaleY(${output})`;
+  },
+});
+
+button.addEventListener('mousedown', () => {
+  springyButton.input = 0.9;
+});
+
+button.addEventListener('mouseup', () => {
+  springyButton.input = 1.2;
+});
+
+button.addEventListener('mouseenter', () => {
+  springyButton.input = 1.2;
+});
+
+button.addEventListener('mouseout', () => {
+  springyButton.input = 1;
+});
+              </code>
+            </pre>
+      </div>
+    </div>
+
+    <!-- TODO: Make a dragging demo using acceleration to rotate the object -->
+
+    <div class="container">
       <h2>Dynamic spring linked to scrolling</h2>
       <div class="section section--example-spider">
         <div class="spider">
-          <div class="spider__inner">🕷</div>
+          <div class="spider__body">🕷</div>
           <div class="spider__thread"></div>
         </div>
       </div>

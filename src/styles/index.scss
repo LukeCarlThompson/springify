@@ -9,7 +9,7 @@ $color--text: rgb(40, 40, 40);
 $color--code-bg: #2d2d2d;
 
 .container {
-  max-width: 900px;
+  max-width: 1200px;
   padding: 0 20px;
   margin: 100px auto;
   &--title {
@@ -95,26 +95,41 @@ p {
 .section--example-from-to {
   position: relative;
   display: flex;
+  justify-content: flex-start;
+  align-items: center;
   background: linear-gradient(to bottom, #c0efff, #5ca2ff);
   box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   height: 140px;
   margin-top: 40px;
-  will-change: transform;
+  padding: 20px 100px;
 }
 .sailboat {
+  position: relative;
   font-size: 5rem;
-  position: absolute;
-  bottom: 20px;
-  left: 10%;
-  transform-origin: 0% 50%;
-  width: 80%;
+  transform-origin: 30% 50%;
+  transform: scaleX(-1);
+  width: 100px;
+  margin-left: -50px;
+  margin-right: -50px;
+  transition: transform 0.1s linear;
   will-change: transform;
-  &--inner {
-    position: relative;
-    display: inline-block;
-    transform: translateX(-50%) scaleX(-1);
-  }
+}
+
+.demo-button {
+  margin: 40px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  width: 200px;
+  border-radius: 100px;
+  font-size: 2rem;
+  cursor: pointer;
+  border: none;
+  background-color: rgb(173, 17, 33);
+  color: white;
+  will-change: transform;
 }
 
 // Example spider
@@ -133,7 +148,7 @@ p {
   font-size: 5rem;
   text-shadow: -2.5px 4px 5px rgba(0, 0, 0, 0.4), -5px 10px 5px rgba(0, 0, 0, 0.2), -7.5px 15px 5px rgba(0, 0, 0, 0.1),
     -10px 20px 10px rgba(0, 0, 0, 0.2);
-  &__inner {
+  &__body {
     transform: rotate(180deg);
   }
   &__thread {
