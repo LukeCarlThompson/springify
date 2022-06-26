@@ -26,19 +26,16 @@ $color--code-bg: #2d2d2d;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     max-width: 100%;
 
-    .token {
-      &.comment {
-        white-space: normal;
-      }
+    pre[class*='language-'],
+    code[class*='language-'] {
+      padding: 1em 0;
+      white-space: pre-wrap;
     }
+
     pre {
       padding-bottom: 0;
     }
   }
-}
-
-code[class*='language-'] {
-  white-space: auto;
 }
 
 pre {
