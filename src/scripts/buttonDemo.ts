@@ -18,11 +18,11 @@ export default function () {
   });
 
   button.addEventListener('mouseup', () => {
-    springyButton.input = 1.2;
+    springyButton.input = 1.1;
   });
 
   button.addEventListener('mouseenter', () => {
-    springyButton.input = 1.2;
+    springyButton.input = 1.1;
   });
 
   button.addEventListener('mouseout', () => {
