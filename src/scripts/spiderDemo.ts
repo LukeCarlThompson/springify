@@ -2,14 +2,16 @@ import { Springify } from './Springify';
 
 export default function () {
   const spider = document.querySelector('.spider') as HTMLElement;
+  const spiderBody = document.querySelector('.spider__body') as HTMLElement;
   const spiderArea = document.querySelector('.section--example-spider') as HTMLElement;
 
   const springySpider = new Springify({
     stiffness: 30,
     damping: 50,
     mass: 10,
-    onFrame: (output) => {
+    onFrame: (output, velocity) => {
       spider.style.transform = `translateY(${output}px)`;
+      spiderBody.style.transform = `rotate(${1 + Math.abs(velocity * 1)})`;
     },
   });
 
