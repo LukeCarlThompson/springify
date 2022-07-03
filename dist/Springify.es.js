@@ -64,7 +64,7 @@ class Springify {
       this.animating = true;
       this.interpolate();
       this.onFrame(this.output, this.velocity);
-      this.animating = !(Math.abs(this.velocity) < 0.2 && Math.abs(this.output - this.input) < 0.2);
+      this.animating = !(Math.abs(this.velocity) < 0.1 && Math.abs(this.output - this.input) < 0.01);
       if (this.animating) {
         cancelAnimationFrame(this.animationFrame);
         this.animationFrame = requestAnimationFrame(this.animLoop);

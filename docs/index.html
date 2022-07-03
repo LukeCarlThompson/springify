@@ -5,8 +5,8 @@
     <link rel="icon" type="image/png" href="/springify/assets/favicon.3230d0f6.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Springify</title>
-    <script type="module" crossorigin src="/springify/assets/index.5f197375.js"></script>
-    <link rel="stylesheet" href="/springify/assets/index.91e51f0c.css">
+    <script type="module" crossorigin src="/springify/assets/index.da16c3ff.js"></script>
+    <link rel="stylesheet" href="/springify/assets/index.3b4bca1b.css">
   </head>
   <body>
     <div class="container">
@@ -18,10 +18,21 @@
         <p>It's a bare bones but flexible utility that can be used to create a range of useful and fun interactions.</p>
       </div>
 
-      <h2>Basic setup</h2>
+      <h2>Install via npm</h2>
+      <div class="section--code">
+        <pre>
+          <code class="language-bash">
+npm i springify
+          </code>
+        </pre>
+      </div>
+
+      <h2>Basic usage</h2>
       <div class="section--code">
         <pre>
           <code class="language-javascript">
+import { Springify } from 'springify';
+
 const spring = new Springify({
   input: 0,
   onFrame: (output, velocity) => {
@@ -76,9 +87,7 @@ const spring = new Springify(
       <h4>Using static values</h4>
       <p>Try interrupting the animation mid way through.</p>
       <div class="section section--example-from-to">
-        <div class="sailboat">
-          <span class="sailboat--inner">⛵</span>
-        </div>
+        <div class="sailboat">⛵</div>
       </div>
       <button class="btn sailboat--away">Sail away</button>
       <button class="btn sailboat--back">Come back</button>
@@ -86,9 +95,13 @@ const spring = new Springify(
       <div class="section--code">
         <pre>
             <code class="language-javascript">
+import { Springify } from 'springify';
+
 const sailboat = document.querySelector('.sailboat');
 const sailAwayButton = document.querySelector('.sailboat--away');
 const sailBackButton = document.querySelector('.sailboat--back');
+
+let direction = 'right';
 
 const springySailboat = new Springify({
   stiffness: 10,
@@ -96,16 +109,19 @@ const springySailboat = new Springify({
   mass: 50,
   onFrame: (output, velocity) => {
     if (sailboat === null) return;
-    sailboat.style.transform = `translateX(${output}%) rotate(${velocity * -0.3}deg)`;
+    sailboat.style.transform = `rotate(${velocity * -0.3}deg) scaleX(${direction === 'right' ? -1 : 1})`;
+    sailboat.style.left = `${output}%`;
   },
 });
 
-sailAwayButton.addEventListener('click', () => {
+sailAway.addEventListener('click', () => {
   springySailboat.input = 100;
+  direction = 'right';
 });
 
-sailBackButton.addEventListener('click', () => {
+sailBack.addEventListener('click', () => {
   springySailboat.input = 0;
+  direction = 'left';
 });
             </code>
           </pre>
@@ -113,10 +129,68 @@ sailBackButton.addEventListener('click', () => {
     </div>
 
     <div class="container">
+      <h2>Button press</h2>
+      <div class="section section--example-button">
+        <button class="demo-button">Press me</button>
+        <button class="demo-button">Press me</button>
+        <button class="demo-button">Press me</button>
+      </div>
+
+      <div class="section--code">
+        <pre>
+              <code class="language-javascript">
+import { Springify } from 'springify';
+
+const buttons = document.querySelectorAll('.demo-button');
+
+buttons.forEach((button) => {
+  const springyButton = new Springify({
+    stiffness: 20,
+    damping: 30,
+    mass: 10,
+    input: 1,
+    onFrame: (output, velocity) => {
+      button.style.transform = `scaleX(${output + velocity * 0.1}) scaleY(${output})`;
+    },
+  });
+
+  button.addEventListener('mousedown', () => {
+    springyButton.input = 0.75;
+  });
+
+  button.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    springyButton.input = 0.75;
+  });
+
+  button.addEventListener('mouseup', () => {
+    springyButton.input = 1.1;
+  });
+
+  button.addEventListener('mouseenter', () => {
+    springyButton.input = 1.1;
+  });
+
+  button.addEventListener('mouseout', () => {
+    springyButton.input = 1;
+  });
+
+  button.addEventListener('touchend', () => {
+    springyButton.input = 1;
+  });
+});
+              </code>
+            </pre>
+      </div>
+    </div>
+
+    <!-- TODO: Make a dragging demo using acceleration to rotate the object -->
+
+    <div class="container">
       <h2>Dynamic spring linked to scrolling</h2>
       <div class="section section--example-spider">
         <div class="spider">
-          <div class="spider__inner">🕷</div>
+          <div class="spider__body">🕷</div>
           <div class="spider__thread"></div>
         </div>
       </div>
@@ -124,6 +198,8 @@ sailBackButton.addEventListener('click', () => {
       <div class="section--code">
         <pre>
               <code class="language-javascript">
+import { Springify } from 'springify';
+                
 const spider = document.querySelector('.spider');
 const spiderArea = document.querySelector('.section--example-spider');
 
@@ -152,6 +228,8 @@ window.addEventListener('scroll', () => {
       <div class="section--code">
         <pre>
           <code class="language-javascript">
+import { Springify } from 'springify';
+
 const helicopter = document.querySelector('.helicopter');
 const helicopterDemo = document.querySelector('.section--example-helicopter');
 
