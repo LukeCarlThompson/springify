@@ -1,20 +1,23 @@
-/* 
-stiffness: effective range from 0 - 100;
-damping: effective range from 0 - 100;
-mass: effective range from 0 - 100;
-*/
-
 interface SpringifyProps {
   input?: number;
+  /**
+   * effective range from 0 - 100
+   */
   stiffness?: number;
+  /**
+   * effective range from 0 - 100
+   */
   damping?: number;
+  /**
+   * effective range from 0 - 100
+   */
   mass?: number;
   onFrame: (output: number, velocity: number) => void;
   onFinished?: () => void;
 }
 
 export class Springify {
-  _input;
+  private _input;
   set input(value: number) {
     this._input = value;
     this.animate();
@@ -22,22 +25,22 @@ export class Springify {
   get input() {
     return this._input;
   }
-  output;
-  stiffness;
-  damping;
-  mass;
-  velocity = 0;
-  amplitude = 0;
-  animating;
-  onFrame;
-  onFinished;
-  lastTime;
-  currentTime;
-  delta;
-  animationFrame;
-  interpolate;
-  animate;
-  animLoop;
+  public output;
+  private stiffness;
+  private damping;
+  private mass;
+  public velocity = 0;
+  private amplitude = 0;
+  private animating;
+  private onFrame;
+  private onFinished;
+  private lastTime;
+  private currentTime;
+  private delta;
+  private animationFrame;
+  private interpolate;
+  private animate;
+  private animLoop;
 
   constructor({
     input = 0,

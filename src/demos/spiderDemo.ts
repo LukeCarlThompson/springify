@@ -1,4 +1,4 @@
-import { Springify } from './Springify';
+import { Springify } from '../springify';
 
 export default function () {
   const spider = document.querySelector('.spider') as HTMLElement;

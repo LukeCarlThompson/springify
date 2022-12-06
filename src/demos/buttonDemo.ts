@@ -1,4 +1,4 @@
-import { Springify } from './Springify';
+import { Springify } from '../springify';
 
 export default function () {
   const buttons = document.querySelectorAll('.demo-button') as NodeListOf<HTMLButtonElement>;

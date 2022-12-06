@@ -1,4 +1,4 @@
-import { Springify } from './Springify';
+import { Springify } from '../springify';
 
 export default function () {
   const sailboat = document.querySelector('.sailboat') as HTMLElement | null;
