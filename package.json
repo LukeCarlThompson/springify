@@ -1,6 +1,6 @@
 {
   "name": "springify",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A tiny lil' (under 1kb gzip) utility function for creating dynamic spring animations",
   "author": "Luke Carl Thompson <hello@lukethompson.com.au> (https://lukethompson.com.au/)",
   "license": "MIT",
