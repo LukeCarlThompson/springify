@@ -4,7 +4,7 @@
 
 ## Docs and demos here.
 
-https://lukecarlthompson.github.io/springify.js
+https://lukecarlthompson.github.io/springify
 
 ## Install via npm
 
