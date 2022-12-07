@@ -20,9 +20,9 @@ export declare class Springify {
     set input(value: number);
     get input(): number;
     output: number;
-    private stiffness;
-    private damping;
-    private mass;
+    stiffness: number;
+    damping: number;
+    mass: number;
     velocity: number;
     private amplitude;
     private animating;
