@@ -40,10 +40,14 @@ class Springify {
         this._input = input;
         // Set the output to start from the input value for the first frame
         this.output = this.input;
-        // Takes a percent value and returns the number within min/max range.
-        // Used to convert the stiffness and damping to easy inputs
+        /**
+         * Takes a percent value and returns the number within min/max range
+         * @param percent The input value to convert to a percentage.
+         * @param min The minimum limit of the range.
+         * @param max The maximum limit of the range.
+         * @returns A value from 0 - 100 within the min and max
+         */
         const percentToValueBetweenRange = (percent, min, max) => (percent * (max - min)) / 100 + min;
-        // Takes in arg object and sets interpolated values on that object based on some spring physics equations
         this.interpolate = () => {
             const stiffness = percentToValueBetweenRange(this.stiffness, -1, -300);
             const damping = percentToValueBetweenRange(this.damping, -0.4, -20);
@@ -54,7 +58,6 @@ class Springify {
             this.velocity += this.amplitude * (this.delta / 1000);
             this.output += this.velocity * (this.delta / 1000);
         };
-        // The animation loop
         this.animLoop = () => {
             this.currentTime = Date.now();
             if (!this.animating)
@@ -63,10 +66,7 @@ class Springify {
             this.lastTime = this.currentTime;
             this.animating = true;
             this.interpolate();
-            // execute the callback function and pass in our prop objects array containing the springified values
             this.onFrame(this.output, this.velocity);
-            // returns true if each output value has reached the input
-            // TODO: find a way to determine when the animation should end. Perhaps based on percentage values of the input and output so it works the same for large and small values.
             this.animating = !(Math.abs(this.velocity) < 0.1 && Math.abs(this.output - this.input) < 0.01);
             // If not finished then cancel any queued frame and animate another frame
             if (this.animating) {
