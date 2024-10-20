@@ -1,4 +1,4 @@
-interface SpringifyProps {
+export type SpringifyProps = {
     input?: number;
     /**
      * effective range from 0 - 100
@@ -12,29 +12,21 @@ interface SpringifyProps {
      * effective range from 0 - 100
      */
     mass?: number;
-    onFrame: (output: number, velocity: number) => void;
-    onFinished?: () => void;
-}
-export declare class Springify {
-    private _input;
-    set input(value: number);
-    get input(): number;
-    output: number;
+};
+export type SpringifyInterface = {
+    input: number;
+    readonly output: number;
     stiffness: number;
     damping: number;
     mass: number;
-    velocity: number;
-    private amplitude;
-    private animating;
-    private onFrame;
-    private onFinished;
-    private lastTime;
-    private currentTime;
-    private delta;
-    private animationFrame;
-    private interpolate;
-    private animate;
-    private animLoop;
-    constructor({ input, stiffness, damping, mass, onFrame, onFinished, }: SpringifyProps);
-}
+    readonly subscribe: Subscribe;
+};
+export type Subscriber = (subscriberProps: SubscriberProps) => void;
+type Subscribe = (subscriber: Subscriber, eventName?: EventName) => Unsubscribe;
+export type Unsubscribe = () => void;
+export type EventName = 'frame' | 'end';
+export type SubscriberProps = {
+    readonly output: number;
+    readonly velocity: number;
+};
 export {};
