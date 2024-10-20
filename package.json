@@ -22,7 +22,7 @@
   "scripts": {
     "dev": "vite --host",
     "build:docs": "vite build --config vite.build-docs.config.js",
-    "build:lib": "tsc --p tsconfig.build.json && vite build --config vite.build-lib.config.js",
+    "build:lib": "vite build --config vite.build-lib.config.js",
     "build:tsc": "tsc",
     "preview": "vite preview",
     "test": "echo \"No test specified\""

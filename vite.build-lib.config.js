@@ -8,14 +8,14 @@ export default defineConfig({
     eslint(),
     dts({
       tsconfigPath: './tsconfig.build.json',
-      exclude: ['./src/demos'],
+      exclude: ['./src/implementation'],
     }),
   ],
   build: {
     outDir: 'dist',
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
-      formats: ['es'],
+      formats: ['es', 'umd'],
       name: 'springify',
       fileName: '[name]',
     },
