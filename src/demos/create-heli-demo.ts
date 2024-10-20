@@ -12,13 +12,13 @@ export function createHeliDemo() {
     throw new Error('unable to find helicopter demo section element');
   }
 
-  const helicopterTransform = (x: number, y: number, rotation: number) => {
-    return `translate(${x}px, ${y}px) rotate(${rotation}deg)`;
-  };
-
   const springyHelicopter = {
     x: new Springify(),
     y: new Springify(),
+  };
+
+  const helicopterTransform = (x: number, y: number, rotation: number) => {
+    return `translate(${x}px, ${y}px) rotate(${rotation}deg)`;
   };
 
   springyHelicopter.x.subscribe(({ output, velocity }) => {

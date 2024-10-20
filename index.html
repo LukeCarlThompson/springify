@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -31,18 +31,23 @@ npm i springify
           <code class="language-javascript">
 import { Springify } from 'springify';
 
-const spring = new Springify({
-  input: 0,
-  onFrame: (output, velocity) => {
-    // output is the output value from the spring
-    // velocity is the velocity our spring is moving at
-    console.log(output);
-    console.log(velocity);
-    }
-  }
-);
+const spring = new Springify();
 
-// Update the value springify will spring from the initial input value to the new one. It automatically starts the animation running when input is set.
+// Subscribe to updates. This will fire every frame and pass through the current values.
+spring.subscribe(({ output, velocity }) => {
+  // output is the output value from the spring
+  // velocity is the velocity our spring is moving at
+  console.log(output);
+  console.log(velocity);
+});
+
+// Subscribe to the end event when the spring settles. This will fire once each time the spring stops.
+spring.subscribe(({ output }) => {
+  // output is the output value from the spring once it has settled
+  console.log(output);
+}, 'end');
+
+// Update the value and springify will beging animating from the initial input value to the new one.
 spring.input = 500;
           </code>
         </pre>
@@ -52,35 +57,19 @@ spring.input = 500;
       <div class="section--code">
         <pre>
             <code class="language-javascript">
-// stiffness: effective range from 0 - 100;
-// damping: effective range from 0 - 100;
-// mass: effective range from 0 - 100;
-const spring = new Springify(
-  {
-    input: 0,
-    stiffness: 0,
-    damping: 30,
-    mass: 20,
-    onFrame: (output, velocity) => {},
-    onFinished: () => {},
-  }
-);
+const spring = new Springify({
+    input: 0, // the initial value
+    stiffness: 0, // effective range from 0 - 100;
+    damping: 30, // effective range from 0 - 100;
+    mass: 20, // effective range from 0 - 100;
+  });
             </code>
           </pre>
       </div>
-      <p>Pass an input value into springify for the initial value to start from.</p>
-      <p>
-        The onFrame callback function will receive properties for the springified output and velocity values. This
-        function is executed every frame so put the logic in here to animate with the output and velocity values.
-      </p>
-      <p>
-        The onFrame callback uses requestAnimationFrame internally and won't start more than one animation loop at a
-        time. So no need to throttle or debounce updating the input value.
-      </p>
-      <p>The onFinished function will run once each time the spring comes to rest after animating.</p>
     </div>
 
     <div class="container">
+      <h1>Examples</h1>
       <h2>Spring from --> to</h2>
       <h4>Using static values</h4>
       <p>Try interrupting the animation mid way through.</p>
@@ -105,11 +94,11 @@ const springySailboat = new Springify({
   stiffness: 10,
   damping: 80,
   mass: 50,
-  onFrame: (output, velocity) => {
-    if (sailboat === null) return;
-    sailboat.style.transform = `rotate(${velocity * -0.3}deg) scaleX(${direction === 'right' ? -1 : 1})`;
-    sailboat.style.left = `${output}%`;
-  },
+});
+
+springySailboat.subscribe(({ output, velocity }) => {
+  sailboat.style.transform = `rotate(${velocity * -0.3}deg) scaleX(${direction === 'right' ? -1 : 1})`;
+  sailboat.style.left = `${output}%`;
 });
 
 sailAway.addEventListener('click', () => {
@@ -143,13 +132,14 @@ const buttons = document.querySelectorAll('.demo-button');
 
 buttons.forEach((button) => {
   const springyButton = new Springify({
+    input: 1,
     stiffness: 20,
     damping: 30,
     mass: 10,
-    input: 1,
-    onFrame: (output, velocity) => {
-      button.style.transform = `scaleX(${output + velocity * 0.1}) scaleY(${output})`;
-    },
+  });
+
+  springyButton.subscribe(({ output, velocity }) => {
+    button.style.transform = `scaleX(${output + velocity * 0.1}) scaleY(${output})`;
   });
 
   button.addEventListener('mousedown', () => {
@@ -182,8 +172,6 @@ buttons.forEach((button) => {
       </div>
     </div>
 
-    <!-- TODO: Make a dragging demo using acceleration to rotate the object -->
-
     <div class="container">
       <h2>Dynamic spring linked to scrolling</h2>
       <div class="section section--example-spider">
@@ -195,7 +183,7 @@ buttons.forEach((button) => {
 
       <div class="section--code">
         <pre>
-              <code class="language-javascript">
+          <code class="language-javascript">
 import { Springify } from 'springify';
                 
 const spider = document.querySelector('.spider');
@@ -205,16 +193,18 @@ const springySpider = new Springify({
   stiffness: 30,
   damping: 50,
   mass: 10,
-  onFrame: (output) => {
-    spider.style.transform = `translateY(${output}px)`;
-  },
+});
+
+springySpider.subscribe(({ output, velocity }) => {
+  spider.style.transform = `translateY(${output}px)`;
+  spiderBody.style.transform = `rotate(${1 + Math.abs(velocity * 1)})`;
 });
 
 window.addEventListener('scroll', () => {
   springySpider.input = window.scrollY - spiderArea.offsetTop + window.innerHeight * 0.5;
 });
-              </code>
-            </pre>
+          </code>
+        </pre>
       </div>
     </div>
 
@@ -231,49 +221,44 @@ import { Springify } from 'springify';
 const helicopter = document.querySelector('.helicopter');
 const helicopterDemo = document.querySelector('.section--example-helicopter');
 
-const springResults = {
-  x: 0,
-  y: 0,
-  velocity: 0,
+
+const springyHelicopter = {
+  x: new Springify(),
+  y: new Springify(),
 };
 
 const helicopterTransform = (x: number, y: number, rotation: number) => {
-  return `translate(${x}px, ${y}px) rotate(${rotation * 0.05}deg)`;
+  return `translate(${x}px, ${y}px) rotate(${rotation}deg)`;
 };
 
-const springyHelicopter = {
-  x: new Springify({
-    onFrame: (output, velocity) => {
-      springResults.x = output;
-      springResults.velocity = velocity;
-      if (!helicopter) return;
-      helicopter.style.transform = helicopterTransform(springResults.x, springResults.y, springResults.velocity);
-    },
-  }),
-  y: new Springify({
-    onFrame: (output) => {
-      springResults.y = output;
-    },
-  }),
-};
+springyHelicopter.x.subscribe(({ output, velocity }) => {
+  helicopter.style.transform = helicopterTransform(output, springyHelicopter.y.output, velocity * 0.05);
+});
 
 const helicopterMove = (clientX, clientY) => {
   // normalize the mouse coordinates to the helicopter demo area
   const helicopterDemoRect = helicopterDemo.getBoundingClientRect();
   const relativeX = clientX - (helicopterDemoRect.left + helicopterDemoRect.width * 0.5);
+
   const relativeY = clientY - (helicopterDemoRect.top + helicopterDemoRect.height * 0.5);
 
-  // Send our updated values as the inputs to the spring
+  // Send our relative mouse values as the inputs to the springs
   springyHelicopter.x.input = relativeX;
   springyHelicopter.y.input = relativeY;
 };
 
-if (helicopterDemo === null) return;
 helicopterDemo.addEventListener('mousemove', (e) => {
+  if (!e.clientX || !e.clientY) return;
   helicopterMove(e.clientX, e.clientY);
 });
 
+helicopterDemo.addEventListener('mouseout', () => {
+  springyHelicopter.x.input = 0;
+  springyHelicopter.y.input = 0;
+});
+
 helicopterDemo.addEventListener('touchmove', (e) => {
+  if (e.touches === undefined) return;
   helicopterMove(e.touches[0].clientX, e.touches[0].clientY);
 });
           </code>
