@@ -28,6 +28,8 @@
     "test": "echo \"No test specified\""
   },
   "devDependencies": {
+    "@eslint-recommended/eslint-config": "^26.1.1",
+    "eslint": "^9.13.0",
     "modern-normalize": "^3.0.1",
     "prettier": "^3.3.3",
     "prismjs": "^1.29.0",
