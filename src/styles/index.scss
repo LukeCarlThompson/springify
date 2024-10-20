@@ -12,35 +12,31 @@ $color--code-bg: #2d2d2d;
   max-width: 1200px;
   padding: 0 20px;
   margin: 100px auto;
-  &--title {
-  }
 }
 
 .section {
   &--code {
+    display: block;
     background-color: $color--code-bg;
     color: white;
     border-radius: 8px;
-    padding: 0 25px;
+    padding: 0 20px;
     margin: 30px 0;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     max-width: 100%;
 
-    pre[class*='language-'],
+    pre[class*='language-'] {
+      display: flex;
+      padding: 0;
+      margin: 0;
+    }
+
     code[class*='language-'] {
-      padding: 1em 0;
+      display: block;
+      padding: 0;
       white-space: pre-wrap;
     }
-
-    pre {
-      padding-bottom: 0;
-    }
   }
-}
-
-pre {
-  white-space: pre-wrap;
-  word-break: keep-all;
 }
 
 .h1 {
@@ -48,16 +44,19 @@ pre {
   text-align: center;
   color: rgb(24, 111, 114);
 }
+
 .subtitle {
   font-size: 1.4rem;
   font-weight: 300;
   line-height: 1.5;
   color: $color--text;
 }
+
 p {
   color: $color--text;
   line-height: 1.4;
 }
+
 .btn {
   margin-top: 30px;
   padding: 13px 30px 15px;
@@ -80,6 +79,7 @@ p {
   display: flex;
   overflow: hidden;
 }
+
 .helicopter {
   font-size: 5rem;
   user-select: none;
@@ -105,6 +105,7 @@ p {
     padding: 20px 50px;
   }
 }
+
 .sailboat {
   position: relative;
   font-size: 5rem;
@@ -179,6 +180,7 @@ p {
   box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
   overflow: hidden;
 }
+
 .spider {
   position: relative;
   font-size: 5rem;

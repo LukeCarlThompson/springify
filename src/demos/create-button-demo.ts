@@ -1,6 +1,6 @@
-import { Springify } from '../springify';
+import { Springify } from '../implementation';
 
-export default function () {
+export function createButtonDemo() {
   const buttons = document.querySelectorAll('.demo-button') as NodeListOf<HTMLButtonElement>;
 
   buttons.forEach((button) => {
@@ -9,9 +9,10 @@ export default function () {
       damping: 30,
       mass: 10,
       input: 1,
-      onFrame: (output, velocity) => {
-        button.style.transform = `scaleX(${output + velocity * 0.1}) scaleY(${output})`;
-      },
+    });
+
+    springyButton.subscribe(({ output, velocity }) => {
+      button.style.transform = `scaleX(${output + velocity * 0.1}) scaleY(${output})`;
     });
 
     button.addEventListener('mousedown', () => {
