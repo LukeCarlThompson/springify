@@ -8,13 +8,13 @@ https://lukecarlthompson.github.io/springify
 
 ## Install via npm
 
-```
+```bash
 npm i springify
 ```
 
 ## Basic usage
 
-```
+```typescript
 import { Springify } from 'springify';
 
 const spring = new Springify();
