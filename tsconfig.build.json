@@ -4,18 +4,17 @@
     "useDefineForClassFields": true,
     "module": "ESNext",
     "lib": ["es2018", "DOM"],
-    "moduleResolution": "bundler",
+    "moduleResolution": "Node",
     "strict": true,
     "declaration": true,
     "declarationDir": "./dist",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "esModuleInterop": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "skipLibCheck": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "noEmit": false
   },
   "include": ["src"]
 }
