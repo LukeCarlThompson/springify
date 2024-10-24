@@ -16,7 +16,7 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/index.js",
+  "main": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "private": false,
   "scripts": {
